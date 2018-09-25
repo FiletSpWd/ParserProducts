@@ -3,7 +3,7 @@ class Parser
     require 'rexml/document'
     include REXML
     require 'nokogiri'
-    load '/home/filet/ParserProducts/site.rb'
+    load 'site.rb'
 
     def initialize (siteforwork)
         @doc = Nokogiri::HTML( siteforwork.download_page )

@@ -6,9 +6,37 @@ class Parser
     load 'site.rb'
 
     def initialize (siteforwork)
-        @doc = Nokogiri::HTML( siteforwork.download_page )
-        enimerable_links(parse_link)
+        @doc = Nokogiri::HTML(siteforwork.download_page)
+        get_count_item
+        set_pages
+        multi_page_parse(siteforwork)
     end
+
+    def multi_page_parse (siteforwork)
+        for item in 1..@pages
+            puts item
+            puts (siteforwork.global_path)
+            _page = Site.new("#{siteforwork.global_path}?p=#{item}")
+            puts _page.global_path
+            @doc = Nokogiri::HTML(_page.download_page)
+            enimerable_links(parse_link)
+        end
+    end
+
+    def set_pages
+         if (@pages / 20.0)>(@pages / 20)
+            @pages=@pages/20 + 1
+         else
+            @pages=@pages/20
+         end
+    end
+
+    def get_count_item
+        string = @doc.xpath('//small[@class="heading-counter"]')
+        @pages  = /(\d+)/m.match(string.to_s)
+        @pages = (@pages.to_s.to_i)
+    end
+
 
     def parse_link
         _links=[]
@@ -58,6 +86,6 @@ class Parser
     end
 
     def parse_image (doc_product)
-        return doc_product.xpath('//*[@class="img-responsive"]/@src')
+        doc_product.xpath('//*[@class="img-responsive"]/@src')
     end
 end

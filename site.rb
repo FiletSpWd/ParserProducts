@@ -9,5 +9,8 @@ class Site
         @page = open(@global_path)
     end
 
+    def global_path
+        @global_path
+    end
 
 end

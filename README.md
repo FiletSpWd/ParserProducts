@@ -4,7 +4,7 @@ The program parse Internet page and write products in .csv file
 <h2> Install</h2>
 
     
-    dir  git clone https://github/FiletSpWd/ParserProducts
+    https://github.com/FiletSpWd/ParserProducts
     
     
 <hr>
